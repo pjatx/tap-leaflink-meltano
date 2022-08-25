@@ -29,7 +29,6 @@ class leaflinkStream(RESTStream):
 
     records_jsonpath = "$.results[*]"  # Or override `parse_response`.
     next_page_token_jsonpath = "$.next"  # Or override `get_next_page_token`.
-    last_id = None
 
     @property
     def authenticator(self) -> APIKeyAuthenticator:
@@ -72,12 +71,11 @@ class leaflinkStream(RESTStream):
                 params = dict(parse.parse_qsl(parse.urlsplit(next_page_token).query))
                 offset = int(params.get('offset', 0))
                 print(str(round((offset / count) * 100, 2)) + "%")
-                return next_page_token
-            else:
-                return None
         else:
-            self.last_id = None
-            return None
+            next_page_token = response.headers.get("X-Next-Page", None)
+        
+            return params
+        return next_page_token
 
     def get_url_params(
         self, context: Optional[dict], next_page_token: Optional[Any]
@@ -109,19 +107,6 @@ class leaflinkStream(RESTStream):
         else:
             return {}
 
-    def post_process(self, row: dict, context: Optional[dict] = None):
-        """Deduplicate rows by id or updated_at."""
-        current_row_id = row.get("id")
-
-        updated_at = row.get("modified")
-
-        if (current_row_id and current_row_id == self.last_id) or (
-            updated_at == self.get_starting_replication_key_value(context)
-        ):
-            return None
-
-        self.last_id = current_row_id
-        return row
 
     def parse_response(self, response: requests.Response) -> Iterable[dict]:
         """Parse the response and return an iterator of result rows."""
