@@ -54,7 +54,7 @@ class OrdersReceivedStream(leaflinkStream):
     name = "orders-received"
     path = "/orders-received/"
     primary_keys = ["number"]
-    replication_key = None
+    replication_key = 'modified'
     # Optionally, you may also use `schema_filepath` in place of `schema`:
     schema_filepath = SCHEMAS_DIR / "orders-received.json"
 
