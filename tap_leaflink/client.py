@@ -71,10 +71,11 @@ class leaflinkStream(RESTStream):
             #     params = dict(parse.parse_qsl(parse.urlsplit(next_page_token).query))
             #     offset = int(params.get('offset', 0))
             #     print(str(round((offset / count) * 100, 2)) + "%")
+            return next_page_token
         else:
-            next_page_token = response.headers.get("X-Next-Page", None)
+            return None
         
-        return next_page_token
+        
 
     def get_url_params(
         self, context: Optional[dict], next_page_token: Optional[Any]
