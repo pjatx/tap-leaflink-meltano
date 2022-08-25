@@ -95,8 +95,8 @@ class leaflinkStream(RESTStream):
             last_updated = context_state.get("replication_key_value")
             start_date = self.config.get("start_date")
             
-            if last_updated:
-                params["modified__gt"] = last_updated
+            # if last_updated:
+            #     params["modified__gt"] = last_updated
             # elif start_date:
             #     params["created_on__gt"] = start_date
             print(params)
