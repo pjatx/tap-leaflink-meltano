@@ -75,7 +75,6 @@ class leaflinkStream(RESTStream):
         else:
             return None
         
-        
 
     def get_url_params(
         self, context: Optional[dict], next_page_token: Optional[Any]
@@ -90,17 +89,17 @@ class leaflinkStream(RESTStream):
             params = dict(parse.parse_qsl(parse.urlsplit(next_page_token).query))
 
             # State management
-            # context_state = self.get_context_state(context)
-            # last_updated = context_state.get("replication_key_value")
+            context_state = self.get_context_state(context)
+            last_updated = context_state.get("replication_key_value")
 
-            # start_date = self.config.get("start_date")
+            start_date = self.config.get("start_date")
 
-            # if last_updated:
-            #     params["modified__gt"] = last_updated
-            #     return params
+            if last_updated:
+                params["modified__gt"] = last_updated
+                return params
 
-            # elif start_date:
-            #     params["created_on__gt"] = start_date
+            elif start_date:
+                params["created_on__gt"] = start_date
 
 
             return params
