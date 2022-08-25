@@ -63,6 +63,16 @@ class leaflinkStream(RESTStream):
             )
             first_match = next(iter(all_matches), None)
             next_page_token = first_match
+
+	
+            if next_page_token:
+                data = response.json()
+                count = data['count']
+                
+                params = dict(parse.parse_qsl(parse.urlsplit(next_page_token).query))
+                offset = int(params.get('offset', 0))
+                print(str(round((offset / count) * 100, 2)) + "%")
+
         else:
             next_page_token = response.headers.get("X-Next-Page", None)
 
@@ -79,6 +89,17 @@ class leaflinkStream(RESTStream):
             page = parsed.scheme + "://" + parsed.netloc + parsed.path
 
             params = dict(parse.parse_qsl(parse.urlsplit(next_page_token).query))
+
+	        # State management
+            context_state = self.get_context_state(context)
+            last_updated = context_state.get("replication_key_value")
+            start_date = self.config.get("start_date")
+            
+            if last_updated:
+                params["modified__gt"] = last_updated
+            # elif start_date:
+            #     params["created_on__gt"] = start_date
+            print(params)
 
             return params
         else:
