@@ -99,8 +99,8 @@ class leaflinkStream(RESTStream):
                 params["modified__gt"] = last_updated
                 return params
 
-            elif start_date:
-                params["created_on__gt"] = start_date
+            # elif start_date:
+            #     params["created_on__gt"] = start_date
 
 
             return params
