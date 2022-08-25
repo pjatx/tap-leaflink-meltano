@@ -27,8 +27,8 @@ class ProductsStream(leaflinkStream):
     """Define custom stream."""
     name = "products"
     path = "/products/"
-    primary_keys = ["id"]
-    replication_key = None
+    replication_key = "modified"
+    replication_method = "INCREMENTAL"
     # Optionally, you may also use `schema_filepath` in place of `schema`:
     schema_filepath = SCHEMAS_DIR / "products.json"
 
@@ -46,7 +46,8 @@ class OrderEventLogsStream(leaflinkStream):
     name = "order-event-logs"
     path = "/order-event-logs/"
     primary_keys = ["id"]
-    replication_key = None
+    replication_key = "modified"
+    replication_method = "INCREMENTAL"
     # Optionally, you may also use `schema_filepath` in place of `schema`:
     schema_filepath = SCHEMAS_DIR / "order-event-logs.json"
 
@@ -55,7 +56,8 @@ class OrdersReceivedStream(leaflinkStream):
     name = "orders-received"
     path = "/orders-received/"
     primary_keys = ["number"]
-    replication_key = None
+    replication_key = "modified"
+    replication_method = "INCREMENTAL"
     # Optionally, you may also use `schema_filepath` in place of `schema`:
     schema_filepath = SCHEMAS_DIR / "orders-received.json"
 
