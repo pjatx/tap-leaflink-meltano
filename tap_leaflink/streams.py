@@ -17,7 +17,7 @@ class CustomersStream(leaflinkStream):
     """Define custom stream."""
     name = "customers"
     path = "/customers/"
-    primary_keys = ["id"]
+    primary_keys = ["id"]  
     replication_key = "modified"
     replication_method = "INCREMENTAL"
     # Optionally, you may also use `schema_filepath` in place of `schema`:
@@ -27,6 +27,7 @@ class ProductsStream(leaflinkStream):
     """Define custom stream."""
     name = "products"
     path = "/products/"
+    primary_keys = ["id"]  
     replication_key = "modified"
     replication_method = "INCREMENTAL"
     # Optionally, you may also use `schema_filepath` in place of `schema`:
