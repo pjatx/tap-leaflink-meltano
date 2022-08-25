@@ -18,8 +18,8 @@ class CustomersStream(leaflinkStream):
     name = "customers"
     path = "/customers/"
     primary_keys = ["id"]
-    replication_key = 'modified'
-    replication_method = 'INCREMENTAL'
+    # replication_key = 'modified'
+    # replication_method = 'INCREMENTAL'
     # Optionally, you may also use `schema_filepath` in place of `schema`:
     schema_filepath = SCHEMAS_DIR / "customers.json"
 
