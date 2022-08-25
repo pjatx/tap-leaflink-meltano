@@ -29,6 +29,7 @@ class leaflinkStream(RESTStream):
 
     records_jsonpath = "$.results[*]"  # Or override `parse_response`.
     next_page_token_jsonpath = "$.next"  # Or override `get_next_page_token`.
+    last_id = None
 
     @property
     def authenticator(self) -> APIKeyAuthenticator:
@@ -72,9 +73,8 @@ class leaflinkStream(RESTStream):
                 offset = int(params.get('offset', 0))
                 print(str(round((offset / count) * 100, 2)) + "%")
         else:
-            next_page_token = response.headers.get("X-Next-Page", None)
-        
-            return params
+            self.last_id = None
+            return None
         return next_page_token
 
     def get_url_params(
