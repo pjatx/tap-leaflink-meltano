@@ -18,10 +18,6 @@ SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
 class leaflinkStream(RESTStream):
     """leaflink stream class."""
 
-    # TODO: Set the API's base URL here:
-    # url_base = "https://api.mysample.com"
-
-    # OR use a dynamic url_base:
     @property
     def url_base(self) -> str:
         """Return the API URL root, configurable via tap settings."""
@@ -33,6 +29,11 @@ class leaflinkStream(RESTStream):
     @property
     def authenticator(self) -> APIKeyAuthenticator:
         """Return a new authenticator object."""
+        
+        # Note, we're using a legacy API key here, so you'll want to change the value 
+        # of the Authorization key to match the new format in the docs: 
+        # https://developer.leaflink.com/api/docs/index.html#section/Authentication
+
         return APIKeyAuthenticator.create_for_stream(
             self,
             key="Authorization",
@@ -101,7 +102,7 @@ class leaflinkStream(RESTStream):
             elif start_date:
                 params["created_on__gt"] = start_date
 
-
+            console.log(params)
             return params
         else:
             return {}
