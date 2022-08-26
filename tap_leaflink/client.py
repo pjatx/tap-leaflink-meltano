@@ -37,7 +37,7 @@ class leaflinkStream(RESTStream):
         return APIKeyAuthenticator.create_for_stream(
             self,
             key="Authorization",
-            value='Token ' + self.config.get("api_key"),
+            value='App ' + self.config.get("api_key"),
             location="header"
         )
 
@@ -102,7 +102,7 @@ class leaflinkStream(RESTStream):
             elif start_date:
                 params["created_on__gt"] = start_date
 
-            console.log(params)
+            print(params)
             return params
         else:
             return {}
