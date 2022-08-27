@@ -53,22 +53,21 @@ class OrdersReceivedStream(leaflinkStream):
     replication_method = "INCREMENTAL"
     schema_filepath = SCHEMAS_DIR / "orders-received.json"
 
-    # def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
-    #     """Return a context dictionary for child streams."""
-    #     return {
-    #         "order_number": record["number"]
-    #     }
+    def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
+        """Return a context dictionary for child streams."""
+        return {
+            "order_number": record["number"]
+        }
 
 class LineItemsStream(leaflinkStream):
     """Line Items Stream"""
 
-    # parent_stream_type = OrdersReceivedStream
+    parent_stream_type = OrdersReceivedStream
 
     name = "line_items"
     primary_keys = ["id"]
     replication_key = None
-    # path = "/orders-received/{order_number}/line-items/"
-    path = "/line-items/"
+    path = "/orders-received/{order_number}/line-items/"
     schema_filepath = SCHEMAS_DIR / "line-items.json"
 
 class ProductCategoriesStream(leaflinkStream):
