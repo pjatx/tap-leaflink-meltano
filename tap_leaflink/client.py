@@ -1,5 +1,5 @@
 """REST client handling, including leaflinkStream base class."""
-
+import logging
 import requests
 from pathlib import Path
 from typing import Any, Dict, Optional, Union, List, Iterable
@@ -11,6 +11,8 @@ from singer_sdk.streams import RESTStream
 from singer_sdk.authenticators import APIKeyAuthenticator
 from urllib import parse
 
+
+logger = logging.getLogger(__name__)
 
 SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
 
@@ -91,7 +93,8 @@ class leaflinkStream(RESTStream):
 
             # State management
             context_state = self.get_context_state(context)
-            last_updated = context_state.get("replication_key_value")
+            progress_markers = context_state.get("progress_markers")
+            last_updated = progress_markers.get("replication_key_value")
 
             start_date = self.config.get("start_date")
 
@@ -100,8 +103,8 @@ class leaflinkStream(RESTStream):
 
             # elif start_date:
             #     params["created_on__gt"] = start_date
+            # logger.info(params)
 
-            # print(params)
             return params
         else:
             return {}
