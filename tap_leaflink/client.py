@@ -92,6 +92,7 @@ class leaflinkStream(RESTStream):
 
         # State management
         context_state = self.get_context_state(context)
+        logger.info(context_state)
 
         # prCyan(context_state)
         if context_state.get("progress_markers"):
