@@ -1,6 +1,10 @@
 version: 1
 send_anonymous_usage_stats: true
 project_id: "tap-leaflink"
+environments:
+  - prod
+  - staging
+  - dev
 plugins:
   extractors:
     - name: "tap-leaflink"

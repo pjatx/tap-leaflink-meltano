@@ -18,20 +18,22 @@ class CustomersStream(leaflinkStream):
 
     name = "customers"
     path = "/customers/"
-    primary_keys = ["id"]  
+    primary_keys = ["id"]
     replication_key = "modified"
     replication_method = "INCREMENTAL"
     schema_filepath = SCHEMAS_DIR / "customers.json"
+
 
 class ProductsStream(leaflinkStream):
     """Products Stream"""
 
     name = "products"
     path = "/products/"
-    primary_keys = ["id"]  
+    primary_keys = ["id"]
     replication_key = "modified"
     replication_method = "INCREMENTAL"
     schema_filepath = SCHEMAS_DIR / "products.json"
+
 
 class OrderEventLogsStream(leaflinkStream):
     """Order Event Logs Stream"""
@@ -42,6 +44,7 @@ class OrderEventLogsStream(leaflinkStream):
     replication_key = "modified"
     replication_method = "INCREMENTAL"
     schema_filepath = SCHEMAS_DIR / "order-event-logs.json"
+
 
 class OrdersReceivedStream(leaflinkStream):
     """Orders Received Stream"""
@@ -59,6 +62,7 @@ class OrdersReceivedStream(leaflinkStream):
             "order_number": record["number"]
         }
 
+
 class LineItemsStream(leaflinkStream):
     """Line Items Stream"""
 
@@ -70,6 +74,7 @@ class LineItemsStream(leaflinkStream):
     path = "/orders-received/{order_number}/line-items/"
     schema_filepath = SCHEMAS_DIR / "line-items.json"
 
+
 class ProductCategoriesStream(leaflinkStream):
     """Product Categories Stream"""
 
@@ -78,6 +83,7 @@ class ProductCategoriesStream(leaflinkStream):
     primary_keys = ["id"]
     replication_key = None
     schema_filepath = SCHEMAS_DIR / "product-categories.json"
+
 
 class ProductLinesStream(leaflinkStream):
     """Product Lines Stream"""

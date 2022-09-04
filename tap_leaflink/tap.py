@@ -3,7 +3,7 @@
 from typing import List
 
 from singer_sdk import Tap, Stream
-from singer_sdk import typing as th  
+from singer_sdk import typing as th
 from tap_leaflink.streams import (
     CustomersStream,
     LineItemsStream,
@@ -35,7 +35,6 @@ class Tapleaflink(Tap):
             th.StringType,
             required=True,
             description="The token to authenticate against the API service",
-            default="aa755a02fd7bbfd5542ffab0353cc8d1b0a6e4c95015e4a03c8ed63ca44b33fd"
         ),
         th.Property(
             "start_date",
