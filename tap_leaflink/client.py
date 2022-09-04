@@ -167,5 +167,5 @@ class leaflinkStream(RESTStream):
                 ),
             ),
         )
-        logger.info(request.url)
+        # logger.info(request.url)
         return request
