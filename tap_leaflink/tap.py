@@ -35,6 +35,7 @@ class Tapleaflink(Tap):
             th.StringType,
             required=True,
             description="The token to authenticate against the API service",
+            default="789802abc64694bd7bc36b35af74b60b4894c1b3ee78f39e0f3d6835dd37a935"
         ),
         th.Property(
             "start_date",

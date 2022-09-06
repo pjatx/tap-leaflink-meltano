@@ -30,8 +30,6 @@ class ProductsStream(leaflinkStream):
     name = "products"
     path = "/products/"
     primary_keys = ["id"]
-    replication_key = "modified"
-    replication_method = "INCREMENTAL"
     schema_filepath = SCHEMAS_DIR / "products.json"
 
 
