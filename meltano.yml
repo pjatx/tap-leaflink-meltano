@@ -3,12 +3,6 @@ send_anonymous_usage_stats: true
 project_id: canvas1839-meltano
 environments:
   - name: dev
-    config:
-      plugins:
-        extractors:
-          - name: tap-leaflink
-            select:
-              - orders_received.*
   - name: staging
   - name: prod
 plugins:
@@ -16,6 +10,12 @@ plugins:
     - name: tap-leaflink
       namespace: tap_leaflink
       pip_url: git+https://github.com/pjatx/tap-leaflink-meltano@main
+      select:
+        - "customers.*"
+        - "orders_received.*"
+        - "product_categories.*"
+        - "product_lines.*"
+        - "products.*"
       capabilities:
         - state
         - catalog

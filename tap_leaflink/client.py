@@ -94,10 +94,10 @@ class leaflinkStream(RESTStream):
         context_state = self.get_context_state(context)
         # logger.info(context_state)
 
-        # prCyan(context_state)
-        if context_state.get("progress_markers"):
-            progress_markers = context_state.get("progress_markers")
-            last_updated = progress_markers.get("replication_key_value")
+        context_state = self.get_context_state(context)
+
+        if context_state.get("replication_key_value"):
+            last_updated = context_state.get("replication_key_value")
 
             if last_updated:
                 params["modified__gt"] = last_updated
