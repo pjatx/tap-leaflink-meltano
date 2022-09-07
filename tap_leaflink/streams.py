@@ -39,8 +39,8 @@ class OrderEventLogsStream(leaflinkStream):
     name = "order_event_logs"
     path = "/order-event-logs/"
     primary_keys = ["id"]
-    # replication_key = "modified"
-    # replication_method = "INCREMENTAL"
+    replication_key = "modified"
+    replication_method = "INCREMENTAL"
     schema_filepath = SCHEMAS_DIR / "order-event-logs.json"
 
 
