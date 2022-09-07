@@ -1,28 +1,53 @@
 version: 1
 send_anonymous_usage_stats: true
-project_id: "tap-leaflink"
+project_id: canvas1839-meltano
 environments:
-  - prod
-  - staging
-  - dev
+  - name: dev
+    config:
+      plugins:
+        extractors:
+          - name: tap-leaflink
+            select:
+              - orders_received.*
+  - name: staging
+  - name: prod
 plugins:
   extractors:
-    - name: "tap-leaflink"
-      namespace: "tap_leaflink"
-      pip_url: -e .
+    - name: tap-leaflink
+      namespace: tap_leaflink
+      pip_url: git+https://github.com/pjatx/tap-leaflink-meltano@main
       capabilities:
         - state
         - catalog
         - discover
-      config:
-        start_date: "2018-01-01T00:00:00Z"
       settings:
-        # TODO: To configure using Meltano, declare settings and their types here:
         - name: api_key
           kind: password
         - name: start_date
           value: "2010-01-01T00:00:00Z"
+      config:
+        api_key: $TAP_LEAFLINK_API_KEY
   loaders:
-    - name: target-jsonl
-      variant: andyh1203
-      pip_url: target-jsonl
+    - name: target-postgres
+      variant: transferwise
+      pip_url: pipelinewise-target-postgres
+      config:
+        dbname: $TARGET_POSTGRES_DBNAME
+        default_target_schema: $TARGET_POSTGRES_DEFAULT_TARGET_SCHEMA
+        host: $TARGET_POSTGRES_HOST
+        user: $TARGET_POSTGRES_USER
+        password: $TARGET_POSTGRES_PASSWORD
+        ssl: true
+        batch_size_rows: 1000
+        flush_all_streams: true
+  orchestrators:
+    - name: airflow
+      variant: apache
+      pip_url: psycopg2 apache-airflow==2.3.2 --constraint https://raw.githubusercontent.com/apache/airflow/constraints-2.3.2/constraints-${MELTANO__PYTHON_VERSION}.txt
+schedules:
+  - name: leaflink-to-postgres
+    interval: 0 4 */1 * *
+    extractor: tap-leaflink
+    loader: target-postgres
+    transform: skip
+    start_date: 2010-01-01 00:00:00

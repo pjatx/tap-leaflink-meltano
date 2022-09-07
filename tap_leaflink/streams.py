@@ -20,7 +20,6 @@ class CustomersStream(leaflinkStream):
     path = "/customers/"
     primary_keys = ["id"]
     # replication_key = "modified"
-    replication_method = "FULL"
     schema_filepath = SCHEMAS_DIR / "customers.json"
 
 
@@ -39,8 +38,8 @@ class OrderEventLogsStream(leaflinkStream):
     name = "order_event_logs"
     path = "/order-event-logs/"
     primary_keys = ["id"]
-    replication_key = "modified"
-    replication_method = "INCREMENTAL"
+    # replication_key = "modified"
+    # replication_method = "INCREMENTAL"
     schema_filepath = SCHEMAS_DIR / "order-event-logs.json"
 
 
@@ -50,8 +49,8 @@ class OrdersReceivedStream(leaflinkStream):
     name = "orders_received"
     path = "/orders-received/"
     primary_keys = ["number"]
-    replication_key = "modified"
-    replication_method = "INCREMENTAL"
+    # replication_key = "modified"
+    # replication_method = "INCREMENTAL"
     schema_filepath = SCHEMAS_DIR / "orders-received.json"
 
     def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
@@ -68,7 +67,7 @@ class LineItemsStream(leaflinkStream):
 
     name = "line_items"
     primary_keys = ["id"]
-    replication_key = None
+    # replication_key = None
     path = "/orders-received/{order_number}/line-items/"
     schema_filepath = SCHEMAS_DIR / "line-items.json"
 
