@@ -50,8 +50,8 @@ class OrdersReceivedStream(leaflinkStream):
     name = "orders_received"
     path = "/orders-received/"
     primary_keys = ["number"]
-    # replication_key = "modified"
-    # replication_method = "INCREMENTAL"
+    replication_key = "modified"
+    replication_method = "INCREMENTAL"
     schema_filepath = SCHEMAS_DIR / "orders-received.json"
 
     def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
