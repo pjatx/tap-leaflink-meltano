@@ -78,7 +78,6 @@ class ProductCategoriesStream(leaflinkStream):
     name = "product_categories"
     path = "/product-categories/"
     primary_keys = ["id"]
-    replication_key = None
     schema_filepath = SCHEMAS_DIR / "product-categories.json"
 
 
@@ -88,5 +87,4 @@ class ProductLinesStream(leaflinkStream):
     name = "product_lines"
     path = "/product-lines/"
     primary_keys = ["id"]
-    replication_key = None
     schema_filepath = SCHEMAS_DIR / "product-lines.json"
