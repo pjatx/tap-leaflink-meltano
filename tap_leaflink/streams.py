@@ -62,12 +62,13 @@ class OrdersReceivedStream(leaflinkStream):
 class LineItemsStream(leaflinkStream):
     """Line Items Stream"""
 
-    parent_stream_type = OrdersReceivedStream
+    # parent_stream_type = OrdersReceivedStream
 
     name = "line_items"
     primary_keys = ["id"]
     # replication_key = None
-    path = "/orders-received/{order_number}/line-items/"
+    # path = "/orders-received/{order_number}/line-items/"
+    path = "/line-items/"
     schema_filepath = SCHEMAS_DIR / "line-items.json"
 
 

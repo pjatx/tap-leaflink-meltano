@@ -11,7 +11,8 @@ plugins:
       namespace: tap_leaflink
       pip_url: git+https://github.com/pjatx/tap-leaflink-meltano@main
       select:
-        - "customers.*"
+        - "orders_received.*"
+        - "line-items.*"
       capabilities:
         - state
         - catalog
